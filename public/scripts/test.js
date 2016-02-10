@@ -1,3 +1,50 @@
+//=======bloc========
+//========version========
+
+//var pointsArray = document.getElementsByClassName('point');
+//
+//var revealPoint = function(point){
+//    point.style.opacity = 1;
+//    point.style.transform = 'scaleX(1) translateY(0)';
+//    point.style.msTransform ='scaleX(1) translateY(0)';
+//    point.style.WebkitTransform = 'scaleX(1) translateY(0)'
+//    };
+//
+//var animatePoints = function(pointsAry){
+//  forEach(pointsAry, revealPoint);  
+//};
+//
+//window.onload = function(){
+//    if(window.innerHeight > 950){
+//        animatePoints(pointsArray);
+//    }
+//    
+//    
+//    window.addEventListener('scroll', function(event){
+//        
+//        if(pointsArray[0].getBoundingClientRect().top <= 500){animatePoints(pointsArray)};
+//        
+//    });
+//    
+//}
+//
+//
+//
+//function forEach(ary, callbac){
+//    for(var i = 0; i < ary.length; i++){
+//        callbac(ary[i]);
+//        
+//    }
+//    
+//    
+//}
+
+
+//=========migs===========================
+//========verion============================
+
+
+
 
 var pnt = document.querySelectorAll(".point");
 var animatePoints = function(a,forEach){
@@ -32,6 +79,53 @@ var animatePoints = function(a,forEach){
                                                      }
                                                  });
                                             }
+
+
+
+
+
+
+var forEach = function(){
+   
+    for(var x = 0; x < pnt.length; x++){
+        console.log(pnt[x].innerHTML)
+    }
+    
+        for(var i = 0; i< pnt.length; i++){
+     
+         pnt[i].style.opacity = 1;
+         pnt[i].style.transform = "scaleX(1) translateY(0)";
+         pnt[i].style.msTransform = "scaleX(1) translateY(0)";
+         pnt[i].style.WebkitTransform = "scaleX(1) translateY(0)";  } 
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
