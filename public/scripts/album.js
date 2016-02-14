@@ -29,6 +29,20 @@
      ]
  };
 
+var albumTupac = {
+       name: 'All eyes on me',
+     artist: 'Tu Pac Shakur',
+     label: 'death row',
+     year: '1996',
+     albumArtUrl: 'assets/images/album_covers/sk.gif',
+     songs: [
+         { name: 'all eyes on me', length: '1:01' },
+         { name: 'me against the world', length: '5:01' }
+        
+     ]
+  
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -66,14 +80,33 @@ var setCurrentAlbum = function(album) {
  };
  
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+     setCurrentAlbum(albumTupac);
  };
 
+var Albumcount = 0;
+var Albums = {
+  1: albumPicasso,
+  2: albumMarconi,
+  3: albumTupac
+};
+
+var changeAlbum = function(){
+                              Albumcount++;
+
+                              if(Albumcount < 4 ){
+                                                   console.log( setCurrentAlbum(Albums[Albumcount]),
+                                                  "hay2 test",
+                                                   Albums.length );
+                                                }
+                              else{ 
+                                    Albumcount = 1;
+                                    setCurrentAlbum(Albums[Albumcount]);
+                                  }
+                            }
 
 
-
-
-
+var x = document.getElementById("albumBox");
+x.addEventListener("click", changeAlbum);
 
 
 
