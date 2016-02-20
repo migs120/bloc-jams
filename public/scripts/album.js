@@ -29,6 +29,9 @@
      ]
  };
 
+var songlistarry = [];
+var rowsreset = [];
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -37,9 +40,10 @@ var createSongRow = function(songNumber, songName, songLength) {
       + '  <td class="song-item-duration">' + songLength + '</td>'
       + '</tr>'
       ;
- 
+       songlistarry.push(template);
      return template;
  };
+
 
 
 var setCurrentAlbum = function(album) {
@@ -57,38 +61,199 @@ var setCurrentAlbum = function(album) {
      albumImage.setAttribute('src', album.albumArtUrl);
  
      // #3
-     albumSongList.innerHTML = '';
+     albumSongList.innerHTML = ''; //  WORKS AS EMPTY ARRAY
  
      // #4
      for (i = 0; i < album.songs.length; i++) {
-         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
+         albumSongList.innerHTML += //FILL EMPTY ARRAY-    \/
+          
+                                  createSongRow(i + 1, album.songs[i].name, album.songs[i].length)  
      }
  };
 
+console.log(songlistarry, 'thearray')
 
- var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
+//pay button animation works====\/
 
- var songRows = document.getElementsByClassName('album-view-song-item');
+ var songListContainer = document.getElementsByClassName('album-view-song-list')[0]; //box with all rows
+
+ var songRows = document.getElementsByClassName('album-view-song-item'); //item is A song row
 
 
  var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 
+
+
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
    
-        songListContainer.addEventListener('mouseover', function(event) {
-          if (event.target.parentElement.className === 'album-view-song-item') {
-          event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
-         }
+   
+   
+   
+        songListContainer //box with rows
+          .addEventListener('mouseover', function(event) {
+                          //var targt = this.parentElement.children[0].children[0];  //
+                          var targt = event.target.parentElement.children[0].children[0]; 
+          console.log(
+                      Boolean(targt), "mouseover"
+                   
+                     );
+           
+          if( Boolean(targt) ){  
+            
+                                if(  event.target.parentElement.children[0].textContent !== "pause" ){
+
+                                                                                                      if (event.target.parentElement.className === 'album-view-song-item') {
+
+                                                                                                                                                                              event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
+                                                                                                                                                                             }
+                                                                                                      }
+                          } 
+          else { 
+                  if (event.target.parentElement.className === 'album-view-song-item') {
+                                                                                         
+                                                                                          event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
+                                                                                         }
+                 }
      });
+   
+   
+   
+    
+   
+   
+         songListContainer //box with rows
+          .addEventListener('click', function(event) {
+           
+           console.log(event.target.parentElement.children[0].children[0].textContent,"click-test1");
+           
+          if (event.target.parentElement.className === 'album-view-song-item') {
+                                                                                   var a = document.getElementsByClassName('album-view-song-list');
+                                                                                    var b = document.getElementsByClassName('album-view-song-item');
+                                                                                  console.log( rowsreset.push(event.target.parentElement )
+                                                                                              //,document.getElementsByClassName('album-view-song-item').remove
+                                                                                              ,rowsreset
+                                                                                              ,b.length
+                                                                                             , 'clicktest-2');
+                                                                                   for(var i = 0; i <  b.length; i++){
+                                                                                     b[i].remove
+                                                                                   }
+                                                                                   
+                                                                                   for(var x = 0; x < songlistarry.length; x++){
+                                                                                     a.innerHTML += songlistarry[x]
+                                                                                   }
+                                                                                    
+                                                                                        
+            
+                                                                                  //setCurrentAlbum(albumPicasso);
+                                                                                event.target.parentElement.querySelector('.song-item-number').innerHTML = '<a class="album-song-button">pause</a>';
+                                                                               }
+     }); 
+  
+   
+   
+   
+   
+   
    
         for (i = 0; i < songRows.length; i++) {
          songRows[i].addEventListener('mouseleave', function(event) {
+           console.log( this.children[0].children[0].textContent === 'pause'
+                       //, this.children[0].children[0].toString()  //strings but dosent work
+                          , this.children[0].children[0].textContent, "mouseleave"
+                      );
+           
+          
+           
+           if(this.children[0].children[0].textContent !== 'pause'){ 
+           
               this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+           console.log(
+                     event.target.parentElement.className,
+                      this.children[0],"mouseleave"
+             
+             //!==  '<a class="album-song-button">pause</a>'
+                      
+                      );
+           }
          });
+           
+         
      }
    
+   
+   
+   
+   
+   
+ //====--EXPARAMENT=   |
+ //                   \|/
+   
+//         songListContainer //box with rows
+//           .addEventListener('click', function(event) {
+//           if (event.target.parentElement.className === 'album-view-song-item') {
+//           event.target.parentElement.querySelector('.song-item-number').innerHTML = 'hay';
+//          }
+//      });
+   
+ //======--EXPARAMENT-END  
+   
+   
+///===--EXPARAMENT2=   |
+ //                   \|/
+   
+//          songRows[1].addEventListener('mouseleave', function(event) {
+//               this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+//            console.log(event.target.parentElement.className);
+//          });
+   
+ //======--EXPARAMENT2-END   
+   
+   
+
+   console.log(
+   
+ songRows[0].remove()
+   )
+   
  };
+
+
+
+
+
+//'<td class="song-item-number" data-song-number="1">1</td>'
+
+
+
+//copy element
+//<a class="album-song-button">pause</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
