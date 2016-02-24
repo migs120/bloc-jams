@@ -78,8 +78,9 @@ var setCurrentAlbum = function(album) {
  
      // #4
      for (i = 0; i < album.songs.length; i++) {
-                 var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].length);
+                 var $newRow = createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
          $albumSongList.append($newRow);
+         console.log(album.songs[i].name);
      }
  };
 
