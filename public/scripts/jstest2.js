@@ -12,32 +12,19 @@ var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
 var currentSoundFile = null;
-var currentVolume = 80;
-
-
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 
 var setSong = function(songNumber){
-								     if (currentSoundFile) {
-										 currentSoundFile.stop();
-									 }
                                   currentlyPlayingSongNumber= parseInt(songNumber);
                                   currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
                                   currentSoundFile = new buzz.sound(currentSongFromAlbum.audioUrl, {
                                                                                                    formats: [ 'mp3' ],
                                                                                                    preload: true
                                                                                                     });
-								  setVolume(currentVolume);																
 								  return currentlyPlayingSongNumber+" "+currentSongFromAlbum.title; //return is for testing
                                   //return currentlyPlayingSongNumber;
                                   };
-								  
-var setVolume = function(volume) {
-									 if (currentSoundFile) {
-										 currentSoundFile.setVolume(volume);
-									 }
-								 };							  
 
 var getSongNumberCell = function(number) {
 										  console.log(
@@ -69,34 +56,51 @@ var createSongRow = function(songNumber, songName, songLength) {
                                                                                                     if(debug // =="on"
                                                                                                       ){console.log(
                                                                                                                 "clickhandler-line42  \n currentlyplayingsongNumber=>"
-                                                                                                                ,currentlyPlayingSongNumber+''
+                                                                                                                ,currentlyPlayingSongNumber
                                                                                                                 ,"\n songNumber =>"
                                                                                                                 ,songNumber
-																												,"\n currentSongFromAlbum.audioUrl=>"
-																												,currentSongFromAlbum//.audioUrl
-                                                                                                                ,"\n this.parent=>"
+                                                                                                                ,"\n this=>"
                                                                                                                 ,"\n"+$(this).parent().html()
-																												,"\n currentSoundFile =>"
-																												,currentSoundFile
-																											
+																												,"\n currentlyPlayingSongNumber == null =>"
+																												,currentlyPlayingSongNumber == null
+																												,"\n currentlyPlayingSongNumber == songNumber=>"
+																												,currentlyPlayingSongNumber == songNumber
+																												,"\n currentlyPlayingSongNumber !== songNumber=>"
+																												,currentlyPlayingSongNumber !== songNumber
+																												
+																												
+																												
+																												
+																												
+																												
+																												/*
                                                                                                                 ,"\n currentlyPlayingSongNumber !== null ="
                                                                                                                 ,currentlyPlayingSongNumber !== null
-																											
+                                                                                                                ,"\n currentlyPlayingSongNumber !== songNumber ="
+                                                                                                                ,toString(currentlyPlayingSongNumber) !== toString(songNumber)
                                                                                                                 ,"\n currentlyPlayingSongNumber == songNumber ="
-                                                                                                                ,currentlyPlayingSongNumber === songNumber    
-																												
-	                                                                                                            ,"\n currentlyPlayingSongNumber !== songNumber ="
-                                                                                                                ,currentlyPlayingSongNumber !== songNumber																											
+                                                                                                                ,currentlyPlayingSongNumber == songNumber    */
 																												
                                                                                                                 ); }
 																												
 																												
-																								
+																									if(currentlyPlayingSongNumber == null){
+																										setSong(songNumber);
+																										
+																										}
+																									if(currentlyPlayingSongNumber == songNumber){
+																										setSong(songNumber);
+																										
+																										}
+																									if(currentlyPlayingSongNumber !== songNumber){
+																										setSong(songNumber);
+																										
+																										
+																										}
 
-																											
+																											/*
 																									if (currentlyPlayingSongNumber !== null) { //if its not null that means there is a muner and must turn to pause icon
-																								    
-																											 // Revert to song number for currently playing song because user started playing new song.
+																								             // Revert to song number for currently playing song because user started playing new song.
 																								             // var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
 
                                                                                                         
@@ -104,45 +108,34 @@ var createSongRow = function(songNumber, songName, songLength) {
 																											 console.log("clickhandler 1st if L62="  //console.log added
 																											 ,currentlyPlayingCell.html(currentlyPlayingSongNumber).html()
 																														);
-																											//updatePlayerBarSong();
-                                                                                                           // $(this).html(playButtonTemplate);
-																											output();
+                                                                                                            $(this).html(playButtonTemplate);
+                                                                                                      
 																									 }
 
 
-																									 if( currentlyPlayingSongNumber+'' == songNumber ) 
-																									{
-																										 // Switch from Pause -> Play button to pause currently playing song.
-																										
-																								        //$(this).html(pauseButtonTemplate);
-																										//$('.main-controls .play-pause').html(playerBarPlayButton);
-																										//currentlyPlayingSongNumber = null;
-																										//currentSongFromAlbum = null;
-																										 if (currentSoundFile.isPaused()) {
-																										   $(this).html(pauseButtonTemplate);
-																										   $('.main-controls .play-pause').html(playerBarPauseButton);
-																											currentSoundFile.play();
-																										} else {
-																											$(this).html(playButtonTemplate);
-																											$('.main-controls .play-pause').html(playerBarPlayButton);
-																											currentSoundFile.pause();   
-																										}
-																										output();
-																										
-																									 }
-																									else if (currentlyPlayingSongNumber+'' !== songNumber) {  
-																									//if (toString(currentlyPlayingSongNumber) !== toString(songNumber) ) { 
+																									if (currentlyPlayingSongNumber !== songNumber) {
+//                                                                                                       
 																										 // Switch from Play -> Pause button to indicate new song is playing.
 																										
 																								     // currentlyPlayingSongNumber = songNumber;
 																								     // currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
-																										setSong(songNumber);
-																										currentSoundFile.play();
+																										console.log("clikhnd-line69-setSong(songNumber)=",setSong(songNumber));
+																										
 																										updatePlayerBarSong();
 																										$(this).html(pauseButtonTemplate);
-                                                                                                     
-																										output(); 
-																										}    
+                                                                                                        //$(this).html(pauseButtonTemplate);
+																										if(debug=="on"){console.log("click handler line74="
+                                                                                                                    ,$(this).html(pauseButtonTemplate)
+                                                                                                                    ,"this="
+                                                                                                                    , $(this).html() )}
+                                                                                                        
+																									} else if (currentlyPlayingSongNumber == songNumber) {
+																										 // Switch from Pause -> Play button to pause currently playing song.
+																								        $(this).html(playButtonTemplate);
+																										$('.main-controls .play-pause').html(playerBarPlayButton);
+																										currentlyPlayingSongNumber = null;
+																										currentSongFromAlbum = null;
+																									 }    */
                                                                                                                                  
 
 																								 };
@@ -266,7 +259,6 @@ var nextSong = function() {
 								//currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 								console.log('nextSong line 213 currentSongindex=',currentSongIndex);
 								setSong(currentSongIndex+1);
-								currentSoundFile.play();
 
 								// Update the Player Bar information
 								$('.currently-playing .song-name').text(currentSongFromAlbum.title);
@@ -304,7 +296,6 @@ var previousSong = function() {
 								//currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 								console.log('prevSong line 250 currentSongindex=',currentSongIndex);
 								setSong(currentSongIndex+1);
-								currentSoundFile.play();
 								
 								
 								// Update the Player Bar information
@@ -340,45 +331,21 @@ var previousSong = function() {
 								});
 
 
-								
-								
-								
-var output = function(){
-	
-	console.log(
-	"\n output"
-	//,"\n currentAlbum =>"
-	//,currentAlbum
-	,"\n currentlyPlayingSongNumber =>"
-	,currentlyPlayingSongNumber
-	,"\n currentSongFromAlbum =>"
-	,currentSongFromAlbum
-	,"\n currentSoundFile =>"
-	,currentSoundFile
-	,"\n currentSongFromAlbum.audioUrl=>"
-	,currentSongFromAlbum.audioUrl
-	//,"\n this"
-	//,this
-	
-	
-	);
-	
-}
 
 /* //example look for analizing
 
- var albumPicasso = {
-     title: 'The Colors',
-     artist: 'Pablo Picasso',
-     label: 'Cubism',
-     year: '1881',
-     albumArtUrl: 'assets/images/album_covers/01.png',
+ var albumMarconi = {
+     title: 'The Telephone',
+     artist: 'Guglielmo Marconi',
+     label: 'EM',
+     year: '1909',
+     albumArtUrl: 'assets/images/album_covers/20.png',
      songs: [
-       { title: 'Blue', duration: '4:26', audioUrl: '/assets/music/blue' },
-         { title: 'Green', duration: '3:14', audioUrl: '/assets/music/green' },
-         { title: 'Red', duration: '5:01', audioUrl: '/assets/music/red' },
-         { title: 'Pink', duration: '3:21', audioUrl: '/assets/music/pink' },
-         { title: 'Magenta', duration: '2:15', audioUrl: '/assets/music/magenta' } 
+         { title: 'Hello, Operator?', duration: '1:01' },
+         { title: 'Ring, ring, ring', duration: '5:01' },
+         { title: 'Fits in your pocket', duration: '3:21' },
+         { title: 'Can you hear me now?', duration: '3:14' },
+         { title: 'Wrong phone number', duration: '2:15' }
      ]
  };
 
