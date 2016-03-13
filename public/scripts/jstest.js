@@ -17,6 +17,7 @@ var currentVolume = 80;
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playPauseControls = $('.main-controls .play-pause');
 
 var setSong = function(songNumber){
 								     if (currentSoundFile) {
@@ -78,6 +79,8 @@ var createSongRow = function(songNumber, songName, songLength) {
                                                                                                                 ,"\n"+$(this).parent().html()
 																												,"\n currentSoundFile =>"
 																												,currentSoundFile
+																												,"\n isPaused"
+																												,currentSoundFile ? currentSoundFile.isPaused() :null
 																											
                                                                                                                 ,"\n currentlyPlayingSongNumber !== null ="
                                                                                                                 ,currentlyPlayingSongNumber !== null
@@ -323,7 +326,16 @@ var previousSong = function() {
 							};
 
 
+var togglePlayFromPlayerBar = function(){
 
+	
+	if( currentSoundFile )
+	   currentSoundFile.togglePlay()
+	  if($playPauseControls.html() == playerBarPlayButton ){
+			$playPauseControls.html(playerBarPauseButton);
+			}else{ $playPauseControls.html(playerBarPlayButton);  }
+	  
+	}
 
 
 
@@ -333,7 +345,7 @@ var previousSong = function() {
 									setCurrentAlbum(albumPicasso);
 									$previousButton.click(previousSong);
 									$nextButton.click(nextSong);
-									
+									$playPauseControls.click(togglePlayFromPlayerBar);
 								   
 									   
 								   
@@ -355,6 +367,8 @@ var output = function(){
 	,currentSongFromAlbum
 	,"\n currentSoundFile =>"
 	,currentSoundFile
+	,"\n isPaused"
+	,currentSoundFile.isPaused()
 	,"\n currentSongFromAlbum.audioUrl=>"
 	,currentSongFromAlbum.audioUrl
 	//,"\n this"
@@ -381,15 +395,11 @@ var output = function(){
          { title: 'Magenta', duration: '2:15', audioUrl: '/assets/music/magenta' } 
      ]
  };
+ 
+ 
+
 
 */
-
-
-
-
-
-
-
 
 
 
