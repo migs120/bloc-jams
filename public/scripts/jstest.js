@@ -62,7 +62,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 																		'<tr class="album-view-song-item">'
 																	  + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
 																	  + '  <td class="song-item-title">' + songName + '</td>'
-																	  + '  <td class="song-item-duration">' + songLength + '</td>'
+																	  + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
 																	  + '</tr>'
 																	  ;
 																	  //</table>
@@ -251,6 +251,49 @@ var setCurrentAlbum = function(album) {
 																							 console.log(album.songs[i].duration);
 																						 }
 										};
+										
+////////// new work space problem ////////////////////////////////////////										
+										                                //
+var setCurrentTimeImPlayerBar = function(currentTime){                  //
+	                                                                    //
+	var $currentTimeElement = $('.seek-control .current-time');         //
+	$currentTimeElement.text(currentTime);                              //
+	                                                                    //
+};                                                                      //
+                                                                        //
+var setTotalTimeInPlayerBar = function(){                               //
+	                                                                    //
+	var $totalTimeElement = $('.seek-control .total-time');             //
+	//$totalTimeElement.text($totalTimeElement/*totalTime*/);           //
+	                                                                    //
+}                                                                       //										
+//////////////////////////////////////////////////////////////////////////	
+
+
+//////workspace identifier////////////////////////////////////
+///////////////////////////////////////////////////////////////
+                                                             //  
+                                                             //
+//                                                          \|/
+
+var filterTimeCode = function (timeInSeconds) {
+    timeInSeconds = parseFloat(timeInSeconds);
+    timeInSeconds = Math.floor(timeInSeconds);
+    var timeinMinutes = Math.floor(timeInSeconds/60);
+    var extraSeconds = timeInSeconds%60;
+    if(extraSeconds<10){
+        extraSeconds = '0'+extraSeconds;
+    }
+    var formattedTime = timeinMinutes + ':' + extraSeconds;
+    return formattedTime;
+    
+};
+
+
+ //                                                         /|\  
+                                                            //
+                                                            //
+//////////////////////////////////////////////////////////////
 
 
  var updateSeekBarWhileSongPlays = function() {
@@ -258,10 +301,12 @@ var setCurrentAlbum = function(album) {
          // #10
          currentSoundFile.bind('timeupdate', function(event) {
              // #11
+			 var currentTime = this.getTime();                                               /////// add in  //////////
+			 var songLength = this.getDuration();                                            /////// add in  //////////
              var seekBarFillRatio = this.getTime() / this.getDuration();
              var $seekBar = $('.seek-control .seek-bar');
- 
              updateSeekPercentage($seekBar, seekBarFillRatio);
+			 setCurrentTimeImPlayerBar(filterTimeCode(currentTime) );                       /////// add in  //////////
          });
      }
  };
@@ -292,12 +337,12 @@ var setCurrentAlbum = function(album) {
  
          // #5
 		 
-		 //  add1 for ploblom 1 \|/   /////////////////////////////////////////
-		         if ($(this).parent().attr('class') == 'seek-control') {      //
-            seek(seekBarFillRatio * currentSoundFile.getDuration());          //
-        } else {                                                              //
-            setVolume(seekBarFillRatio * 100);  }                             //
-		 //  add1 for ploblom 1 /|\  ///////////////////////////////////////////
+		 
+		         if ($(this).parent().attr('class') == 'seek-control') {     
+            seek(seekBarFillRatio * currentSoundFile.getDuration());         
+        } else {                                                              
+            setVolume(seekBarFillRatio * 100);  }                            
+		 
 		 
 		 
          updateSeekPercentage($(this), seekBarFillRatio);
@@ -315,12 +360,12 @@ var setCurrentAlbum = function(album) {
              var barWidth = $seekBar.width();
              var seekBarFillRatio = offsetX / barWidth;
 			 
-			  //  add2 for ploblom 1 \|/ /////////////////////////////////////
-			 if ($seekBar.parent().attr('class') == 'seek-control') {       //
-                seek(seekBarFillRatio * currentSoundFile.getDuration());    //
-            } else {                                                        //  
-                setVolume(seekBarFillRatio);}                               //
-			 //  add2 for ploblom 1 /|\  ////////////////////////////////////
+			  
+			 if ($seekBar.parent().attr('class') == 'seek-control') {       
+                seek(seekBarFillRatio * currentSoundFile.getDuration());    
+            } else {                                                          
+                setVolume(seekBarFillRatio);}                               
+			 
  
              updateSeekPercentage($seekBar, seekBarFillRatio);
          });
@@ -347,6 +392,7 @@ var updatePlayerBarSong = function() {
 											$('.currently-playing .artist-name').text(currentAlbum.artist);
 											$('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
 											$('.main-controls .play-pause').html(playerBarPauseButton);
+											setTotalTimeInPlayerBar(filterTimeCode(currentSongFromAlbum.length));                     //////////////////add in ///////////////////////////////////////////////////
 
 										};
 
@@ -504,15 +550,15 @@ var output = function(){
 */
 
 
+//////workspace identifier////////////////////////////////////
+///////////////////////////////////////////////////////////////
+                                                             //  
+                                                             //
+//                                                          \|/
 
 
 
-
-
-
-
-
-
-
-
-
+ //                                                         /|\  
+                                                            //
+                                                            //
+//////////////////////////////////////////////////////////////
