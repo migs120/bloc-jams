@@ -23,11 +23,11 @@ app.get( "/album.html" , function (req, res) {
 })
 
 //var server = app.listen(process.env.PORT || 3000, '0.0.0.0', function () {
-var server = app.listen(process.env.NODE_ENV || 8080 , function () {
+var server = app.listen(process.env.Port || 8080 , function () {
   var host = server.address().address
   var port = server.address().port
 
-  console.log("Example app listening at http://%s:%s", host, port)
+  console.log("Example app listening at http://%s:%s", host, port, process.env.Port)
   
   
   
