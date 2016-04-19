@@ -199,7 +199,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         }
     };
 
-
+    //song event handler for song ceated when row is created
     $row.find('.song-item-number').click(clickHandler);
     $row.hover(onHover, offHover);
     return $row;
